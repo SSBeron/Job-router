@@ -1,17 +1,16 @@
 import { useLoaderData, Link } from "react-router-dom"
 
 export default function Careers() {
-  const data = useLoaderData()
+  const career = useLoaderData()
   
   return (
     <div className="careers">
-      {data.map(data => (
-        <Link to="/" key={data.id}>
-          <p>{data.title}</p>
-          <p>Based in {data.location}</p>
+      {career.map(career => (
+        <Link to={career.id.toString()} key={career.id}>
+          <p>{career.title}</p>
+          <p>Based in {career.location}</p>
         </Link>
       ))}
-
     </div>
   )
 }
@@ -19,6 +18,10 @@ export default function Careers() {
 //LOADER FUNCTION
 export const careersLoader = async () => {
   const res = await fetch("http://localhost:4000/careers")
+
+  if (!res.ok){
+  throw Error(`Could not fetch the career`)
+}
 
   return res.json()
 }
